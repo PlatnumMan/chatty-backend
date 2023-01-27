@@ -14,6 +14,7 @@ import Logger from 'bunyan';
 import 'express-async-errors';
 import { config } from '@root/config';
 import applicationRoutes from '@root/routes';
+import { Helpers } from '@global/helpers/helpers';
 
 const SERVER_PORT = 5000;
 const log: Logger = config.createLogger('server');
@@ -106,13 +107,13 @@ export class ChattyServer {
   }
 
   private startHttpServer(httpServer: http.Server): void {
-    log.info(`Server has started with process id: ${process.pid}`);
+    Helpers.log.info(`Server has started with process id: ${process.pid}`);
     httpServer.listen(SERVER_PORT, () => {
-      log.info(`Server is running on port ${SERVER_PORT}`);
+      Helpers.log.info(`Server is running on port ${SERVER_PORT}`);
     });
   }
 
   private socketIOConnections(io: Server): void {
-    log.info('SocketIO has started');
+    Helpers.log.info('SocketIO has started');
   }
 }

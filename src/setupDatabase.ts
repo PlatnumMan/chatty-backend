@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import Logger from 'bunyan';
 import { config } from '@root/config';
+import { redisConnection } from '@service/redis/redis.connection';
+import { Helpers } from '@global/helpers/helpers';
 
 const log: Logger = config.createLogger('setupDatabase');
 
@@ -10,7 +12,8 @@ export default () => {
     mongoose
       .connect(`${config.DATABASE_URL}`)
       .then(() => {
-        log.info('Successfully connected to MongoDB.');
+        Helpers.log.info('Successfully connected to MongoDB.');
+        redisConnection.connect();
       })
       .catch((err) => {
         log.error('Error connecting to MongoDB: ', err.message);
